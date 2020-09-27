@@ -1,3 +1,3 @@
 
 rem method two : discard bad ways (8 min)
-python  ..\horse_rider.py -g ..\knights.csv -t 86
+python  ..\knights.py -g ..\knights.csv -t 86
