@@ -24,10 +24,11 @@ import time
 import cProfile
 import pstats
 
-# windows (detect key pressed)
-import msvcrt
-# windows (make sound)
-import winsound
+if sys.platform == 'win32':
+    # windows (detect key pressed)
+    import msvcrt
+    # windows (make sound)
+    import winsound
 
 import PIL.Image
 import PIL.ImageDraw
@@ -42,9 +43,9 @@ PROFILE = False
 # set to true to have better insight (but program will be slow)
 DEBUG = False
 
-FONT_SMALLER = PIL.ImageFont.truetype("arial.ttf", 10)
-FONT_NORMAL = PIL.ImageFont.truetype("arial.ttf", 12)
-FONT_BIGGER = PIL.ImageFont.truetype("arial.ttf", 20)
+FONT_SMALLER = PIL.ImageFont.truetype("Hack-Regular.ttf", 10)
+FONT_NORMAL = PIL.ImageFont.truetype("Hack-Regular.ttf", 12)
+FONT_BIGGER = PIL.ImageFont.truetype("Hack-Regular.ttf", 20)
 
 # how many other step points do we link to a step point ?
 NB_CLOSEST_TO_LINK = 5
@@ -913,13 +914,14 @@ class Grid:
                     best_score_so_far = score
 
             # we trace  intermediate positions when keyboard hit
-            # windows
-            if msvcrt.kbhit():  # type: ignore
-                _ = msvcrt.getch()  # type: ignore
-                circuit = Circuit(self, network, "all intermediate")
-                nonlocal number
-                circuit.show(f"Riders_attempt_{nb_paths:03}_{number:03}.png", True)
-                number += 1
+            if sys.platform == 'win32':
+                # windows
+                if msvcrt.kbhit():  # type: ignore
+                    _ = msvcrt.getch()  # type: ignore
+                    circuit = Circuit(self, network, "all intermediate")
+                    nonlocal number
+                    circuit.show(f"Riders_attempt_{nb_paths:03}_{number:03}.png", True)
+                    number += 1
 
             # there is a target score : give up if reached (was not a solution)
             if target is not None and not network.complete() and network.cost() > target:
