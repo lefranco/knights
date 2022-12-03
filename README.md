@@ -1,2 +1,2 @@
 # knights
-Problème des cavaliers parcours optimal
+Optimizing knight travel on a board with numbers 
